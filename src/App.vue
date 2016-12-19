@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <v-header></v-header>
     <div class="tab">
       <div class="tab-item">
@@ -26,7 +26,6 @@
 </script>
 
 <style lang='stylus' rel='stylesheet/stylus'>
-  app
     .tab
       display: flex
       width: 100%
