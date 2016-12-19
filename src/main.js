@@ -9,7 +9,11 @@ Vue.use(VueRouter)
 
 let app = Vue.extend(App)
 
-let router = new VueRouter()
+let router = new VueRouter({
+	//自定义激活时的类名  默认：v-link-active
+	linkActiveClass: 'active'
+
+})
 
 router.map({
     '/goods': {
@@ -24,3 +28,6 @@ router.map({
 })
 
 router.start(app, '#app')
+
+/*默认路径*/
+router.go('/goods')

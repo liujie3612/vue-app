@@ -34,4 +34,11 @@
       .tab-item
         flex: 1
         text-align: center
+        & > a
+          display:inline-block
+          width:100%
+          font-size: 14px
+          color: rgb(77,85,93)
+          &.active
+            color:rgb(240,20,20)
 </style>
