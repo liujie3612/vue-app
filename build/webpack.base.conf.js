@@ -18,7 +18,10 @@ module.exports = {
     alias: {
       'src': path.resolve(__dirname, '../src'),
       // 'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components')
+      'components': path.resolve(__dirname, '../src/components'),
+      /*css 不需要相对路径*/
+      'common': path.resolve(__dirname, '../src/common')
+
     }
   },
   resolveLoader: {
