@@ -23,7 +23,9 @@
   export default{
     data() {
       return {
-        seller: {}
+        seller: {
+          type: Object
+        }
       }
     },
     created() {
