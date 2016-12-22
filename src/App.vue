@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-header :seller='seller'></v-header>
+    <v-header :seller="seller"></v-header>
     <div class="tab border-1px">
       <div class="tab-item">
         <a v-link="{path: '/goods'}">商品</a>
@@ -12,11 +12,11 @@
         <a v-link="{path: '/seller'}">商家</a>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view :seller="seller"></router-view>
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
   import header from './components/header/header.vue';
   const ERR_OK = 0
 
