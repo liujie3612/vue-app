@@ -17,23 +17,32 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import urlParse from 'common/script/util';
   import header from './components/header/header.vue';
+
   const ERR_OK = 0
 
   export default{
     data() {
       return {
         seller: {
-          type: Object
+          //id的值是自执行的函数 返回url里的id的值
+          type:Object,
+          id:(() => {
+            let queryParam = urlParse();
+            return queryParam.id
+          })()
         }
       }
     },
     created() {
-      this.$http.get('/api/seller').then((response) => {
+      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
         /*返回的response 是 promise 对象*/
         response = response.body;
         if( response.errno === ERR_OK ) {
-            this.seller = response.data;
+            // this.seller = response.data;
+            //给对象添加属性  否则的话id的属性会被新的对象覆盖  相当于合并对象
+            this.seller = Object.assign({},this.seller,response.data)
         }
 
       });
