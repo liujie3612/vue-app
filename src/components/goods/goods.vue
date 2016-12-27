@@ -14,7 +14,7 @@
  				<li v-for='item in goods' class="food-list food-list-hook">
  					<h1 class="title">{{item.name}}</h1>
  					<ul>
- 						<li @click="selectFood(food,$event)" v-for='food in item.foods' class="food-item border-1px">
+ 						<li @click="selectFood(food,$event)" v-for='food in item.foods' class="food-item">
  							<div class="icon">
  								<img :src="food.icon" alt="" width="58">
  							</div>
@@ -64,99 +64,99 @@
 		},
 		created() {
 			this.classMap = ['decrease','discount','special','invoice','guarantee']
-      		this.$http.get('/api/goods').then((response) => {
-		        response = response.body;
-		        if( response.errno === ERR_OK ) {
-		            this.goods = response.data;
-		            this.$nextTick(() => {
-		            	this._initScroll()
-		            	this._calculateHeight()
-		            })  
-		        }
-      		})
-    	},
-    	computed: {
-    		currentIndex() {
-    			for(let i = 0;i < this.listHeight.length; i++) {
-    				let height1 = this.listHeight[i]
-    				let height2 = this.listHeight[i + 1]
-    				if(!height2  || (this.scrollY >= height1 && this.scrollY < height2)) {
-    					return i;
-    				}
-    			}
-    			return 0
-    		},
-    		// 子组件的值会影响父组件
-    		selectFoods() {
-    			let foods = []
-    			this.goods.forEach((good) => {
-    				good.foods.forEach((food) => {
-    					if(food.count) {
-    						foods.push(food)
-    					}
-    				});
+  		this.$http.get('/api/goods').then((response) => {
+        response = response.body;
+        if( response.errno === ERR_OK ) {
+            this.goods = response.data;
+            this.$nextTick(() => {
+            	this._initScroll()
+            	this._calculateHeight()
+            })  
+        }
+  		})
+    },
+  	computed: {
+  		currentIndex() {
+  			for(let i = 0;i < this.listHeight.length; i++) {
+  				let height1 = this.listHeight[i]
+  				let height2 = this.listHeight[i + 1]
+  				if(!height2  || (this.scrollY >= height1 && this.scrollY < height2)) {
+  					return i;
+  				}
+  			}
+  			return 0
+  		},
+  		// 子组件的值会影响父组件
+  		selectFoods() {
+  			let foods = []
+  			this.goods.forEach((good) => {
+  				good.foods.forEach((food) => {
+  					if(food.count) {
+  						foods.push(food)
+  					}
+  				});
 
-    			});
-    			return foods;
-    		}
-    	},
-    	methods: {
-    		_initScroll() {
-    			this.menuScroll = new BScroll(this.$els.menuWrapper, {
-    				click : true
-    			});
-    			this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
-    				click : true,
-    				probeType: 3
-    			})
+  			});
+  			return foods;
+  		}
+  	},
+  	methods: {
+  		_initScroll() {
+  			this.menuScroll = new BScroll(this.$els.menuWrapper, {
+  				click : true
+  			});
+  			this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
+  				click : true,
+  				probeType: 3
+  			})
 
-    			this.foodsScroll.on('scroll',(pos) => {
-    				this.scrollY = Math.abs(Math.round(pos.y))
-    			})
-    		},
-    		_calculateHeight() {
-    			let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
-    			let height = 0
-    			this.listHeight.push(height)
-    			for(let i = 0;i < foodList.length; i++) {
-    				let item = foodList[i]
-    				height += item.clientHeight
-    				this.listHeight.push(height)
-    			}
-    		},
-    		selectMenu(index,event) {
-    			//过滤掉浏览器原生的click事件，只执行自定义的点击事件  pc页面的时候，派发了两次click事件 浏览器原生的点击事件没有_constructed属性
-    			if(!event._constructed) {
-    				return
-    			}
-    			let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
-    			let el = foodList[index]
-    			this.foodsScroll.scrollToElement(el,300)
-    		},
-    		selectFood(food,event) {
-    			if(!event._constructed) {
-    				return
-    			}
-    			this.selectedFood = food
-    			this.$refs.food.show()
-    		},
-    		_drop(target) {
-    			//体验优化 异步执行小球下落动画
-    			this.$nextTick(() => {
-    				this.$refs.shopcart.drop(target)
-    			})	
-    		}
-    	},
-    	components: {
-    		shopcart,
-    		cartcontrol,
-    		food
-    	},
-    	events: {
-    		'cart.add'(target) {
-    			this._drop(target)
-    		}
-    	}
+  			this.foodsScroll.on('scroll',(pos) => {
+  				this.scrollY = Math.abs(Math.round(pos.y))
+  			})
+  		},
+  		_calculateHeight() {
+  			let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
+  			let height = 0
+  			this.listHeight.push(height)
+  			for(let i = 0;i < foodList.length; i++) {
+  				let item = foodList[i]
+  				height += item.clientHeight
+  				this.listHeight.push(height)
+  			}
+  		},
+  		selectMenu(index,event) {
+  			//过滤掉浏览器原生的click事件，只执行自定义的点击事件  pc页面的时候，派发了两次click事件 浏览器原生的点击事件没有_constructed属性
+  			if(!event._constructed) {
+  				return
+  			}
+  			let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
+  			let el = foodList[index]
+  			this.foodsScroll.scrollToElement(el,300)
+  		},
+  		selectFood(food,event) {
+  			if(!event._constructed) {
+  				return
+  			}
+  			this.selectedFood = food
+  			this.$refs.food.show()
+  		},
+  		_drop(target) {
+  			//体验优化 异步执行小球下落动画
+  			this.$nextTick(() => {
+  				this.$refs.shopcart.drop(target)
+  			})	
+  		}
+  	},
+  	components: {
+  		shopcart,
+  		cartcontrol,
+  		food
+  	},
+  	events: {
+  		'cart.add'(target) {
+  			this._drop(target)
+  		}
+  	}
 	}
 </script>
 

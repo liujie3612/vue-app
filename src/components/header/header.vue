@@ -97,7 +97,7 @@
 
 	.header
 		position: relative
-		overflow: hidden;
+		overflow: hidden
 		color:#fff
 		background: rgba(7,17,27,.5)
 		.content-wrapper

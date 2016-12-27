@@ -34,4 +34,4 @@ router.map({
 router.start(app, '#app')
 
 /*默认路径*/
-router.go('/goods')
+// router.go('/goods')
